@@ -1,0 +1,35 @@
+:local(.stopwatch) {
+  padding: 20px;
+  background-color: #403939;
+  border: 2px solid #2b4371;
+  border-radius: 10px;
+  text-align: center;
+}
+
+:local(.stopwatchDisplay) {
+  margin-bottom: 10px;
+  font-size: 26px;
+  font-weight: bold;
+  text-align: center;
+}
+
+:local(.btn) {
+  padding: 10px;
+  background-color: #2d2525;
+  border: none;
+  border-radius: 5px;
+  cursor: pointer;
+  transition: background-color 0.2s ease;
+}
+
+:local(.btn):active {
+  transform: translateY(2px);
+}
+
+:local(.btn):hover {
+  background-color: #382f2f;
+}
+
+:local(.btn):not(:first-of-type) {
+  margin-left: 18px;
+}
