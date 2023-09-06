@@ -1,6 +1,6 @@
 :local(.stopwatch) {
   padding: 20px;
-  background-color: #403939;
+  background-color: #625b5b;
   border: 2px solid #2b4371;
   border-radius: 10px;
   text-align: center;
@@ -11,6 +11,7 @@
   font-size: 26px;
   font-weight: bold;
   text-align: center;
+  color: white;
 }
 
 :local(.btn) {
