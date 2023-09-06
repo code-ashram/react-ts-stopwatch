@@ -8,7 +8,7 @@ import Time from '../../Models/Time.ts'
 import styles from './Stopwatch.module.css'
 
 const Stopwatch: FC = () => {
-  const [time, setTime] = useState<Time>({ seconds: 0, minutes: 0, hours: 0 })
+  const [time, setTime] = useState<Time>({ seconds: 56, minutes: 59, hours: 0 })
   const [isActive, setIsActive] = useState<boolean>(false)
 
   const handleStart = () => {
@@ -23,10 +23,18 @@ const Stopwatch: FC = () => {
     let intervalId: string | number | NodeJS.Timeout | undefined
 
     if (isActive) {
-      intervalId = setInterval(
-        () => setTime(
-          (prevTime) => ({ ...prevTime, seconds: prevTime.seconds + 1 })
-        ), 1000)
+      intervalId = setInterval(() => setTime(prevTime => {
+          if (prevTime.seconds >= 59) {
+            return { ...prevTime, seconds: 0, minutes: prevTime.minutes + 1 }
+          }
+
+          if (prevTime.minutes > 59) {
+            return { ...prevTime, minutes: 0, hours: prevTime.hours + 1, seconds: 1 }
+          }
+
+          return { ...prevTime, seconds: prevTime.seconds + 1 }
+        }
+      ), 1000)
     } else {
       clearInterval(intervalId)
       setTime(
