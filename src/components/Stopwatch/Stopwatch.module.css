@@ -8,7 +8,7 @@
 
 :local(.stopwatchDisplay) {
   margin-bottom: 10px;
-  font-size: 26px;
+  font-size: 34px;
   font-weight: bold;
   text-align: center;
   color: white;
@@ -16,6 +16,7 @@
 
 :local(.btn) {
   padding: 10px;
+  width: 40px;
   background-color: #2d2525;
   border: none;
   border-radius: 5px;
