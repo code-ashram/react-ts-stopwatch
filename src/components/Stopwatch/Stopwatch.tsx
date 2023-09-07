@@ -3,12 +3,12 @@ import { FC, useEffect, useState } from 'react'
 import cn from 'classnames'
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 import { faStop, faPlay } from '@fortawesome/free-solid-svg-icons'
-import Time from '../../Models/Time.ts'
+import { hour, minute } from '../../Constants/time.ts'
 
 import styles from './Stopwatch.module.css'
 
 const Stopwatch: FC = () => {
-  const [time, setTime] = useState<Time>({ seconds: 56, minutes: 59, hours: 0 })
+  const [seconds, setSeconds] = useState<number>(0)
   const [isActive, setIsActive] = useState<boolean>(false)
 
   const handleStart = () => {
@@ -20,33 +20,26 @@ const Stopwatch: FC = () => {
   }
 
   useEffect(() => {
-    let intervalId: string | number | NodeJS.Timeout | undefined
+      let intervalId: string | number | NodeJS.Timeout | undefined
 
-    if (isActive) {
-      intervalId = setInterval(() => setTime(prevTime => {
-          if (prevTime.seconds >= 59) {
-            return { ...prevTime, seconds: 0, minutes: prevTime.minutes + 1 }
-          }
+      if (isActive) {
+        intervalId = setInterval(() => setSeconds(seconds + 1), 1000)
+      }
 
-          if (prevTime.minutes > 59) {
-            return { ...prevTime, minutes: 0, hours: prevTime.hours + 1, seconds: 1 }
-          }
+      return () => clearInterval(intervalId)
+    }, [isActive, seconds]
+  )
 
-          return { ...prevTime, seconds: prevTime.seconds + 1 }
-        }
-      ), 1000)
-    } else {
-      clearInterval(intervalId)
-      setTime(
-        (prevTime) => ({ ...prevTime })
-      )
-    }
+  const hours = Math.floor(seconds / hour)
 
-    return () => clearInterval(intervalId)
-  }, [isActive])
+  const minutes = Math.floor((seconds % hour) / minute)
 
   return <div className={styles.stopwatch}>
-    <div className={styles.stopwatchDisplay}>{time.hours}:{time.minutes}:{time.seconds}</div>
+    <div className={styles.stopwatchDisplay}>
+      {hours}
+      :{minutes.toString().padStart(2, "0")}
+      :{seconds.toString().padStart(2, "0")}
+    </div>
 
     <div className={styles.controlPanel}>
       <button className={cn(styles.btn)} onClick={handleStop}>
